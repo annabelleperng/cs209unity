@@ -39,5 +39,14 @@ public class MarbleBehavior : MonoBehaviour
     
         //Put code that moves the sprite using the RigidBody here
     }
-    
+
+    IEnumerator OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("Goal"))
+        {
+            gameObject.GetComponent<ParticleSystem>().Play();
+            yield return new WaitForSeconds(3);
+            gameObject.GetComponent<ParticleSystem>().Stop();
+        }
+    }
 }
