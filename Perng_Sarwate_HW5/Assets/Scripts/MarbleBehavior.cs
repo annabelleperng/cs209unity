@@ -6,16 +6,21 @@ public class MarbleBehavior : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float rotateSpeed = 15f;
-    
+    public float jumpVelocity = 5f;
+
+    public float distanceToGround = 0.1f;
+    public LayerMask groundLayer;
+    private SphereCollider _col;
     private float fbInput;
     private float lrInput;
-    
+
     private Rigidbody _rb;
-    
+
     void Start()
     {
         //You'll need to add a rigidbody to the marble first
-//        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
+        _col = GetComponent<SphereCollider>();
     }
 
     // Update is called once per frame
@@ -29,14 +34,20 @@ public class MarbleBehavior : MonoBehaviour
         fbInput = vert * moveSpeed;
         lrInput = Input.GetAxis("Horizontal") * rotateSpeed;
 
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        // if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+        }
+
         this.transform.Translate(Vector3.forward * fbInput * Time.deltaTime);
 
         this.transform.Rotate(Vector3.up * lrInput * Time.deltaTime);
     }
-    
+
     void FixedUpdate()
     {
-    
+
         //Put code that moves the sprite using the RigidBody here
     }
 
@@ -49,4 +60,20 @@ public class MarbleBehavior : MonoBehaviour
             gameObject.GetComponent<ParticleSystem>().Stop();
         }
     }
+
+    private bool IsGrounded()
+    {
+        float sphereRadius = _col.radius;
+        Vector3 center = _col.center;
+
+        Debug.Log("checking if grounded");
+        bool grounded = Physics.CheckSphere(this.transform.position, sphereRadius + distanceToGround, groundLayer,
+                                            QueryTriggerInteraction.Ignore);
+        Debug.Log("grounded = " + grounded);
+        Debug.Log("position = " + this.transform.position);
+        Debug.Log("rad = " + sphereRadius);
+        Debug.Log("gl = " + groundLayer);
+        return grounded;
+    }
+
 }
