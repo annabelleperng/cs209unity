@@ -7,5 +7,6 @@ public class GoalBehavior : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Destroy(gameObject);
+        //gameManager.GoalsCollected += 1;
     }
 }

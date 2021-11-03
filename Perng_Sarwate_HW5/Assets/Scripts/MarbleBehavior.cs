@@ -17,6 +17,8 @@ public class MarbleBehavior : MonoBehaviour
     public GameObject blast;
     public float blastSpeed = 100f;
 
+    public GameBehaviorScript gameManager;
+
     private Rigidbody _rb;
 
     void Start()
@@ -24,6 +26,7 @@ public class MarbleBehavior : MonoBehaviour
         //You'll need to add a rigidbody to the marble first
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<SphereCollider>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameBehaviorScript>();
     }
 
     // Update is called once per frame
@@ -68,6 +71,8 @@ public class MarbleBehavior : MonoBehaviour
             gameObject.GetComponent<ParticleSystem>().Play();
             yield return new WaitForSeconds(3);
             gameObject.GetComponent<ParticleSystem>().Stop();
+        } else if (collision.gameObject.name.Contains("Obstacle")) {
+            gameManager.PlayerHealth -= 10;
         }
     }
 
