@@ -6,9 +6,6 @@ public class BlastBehavior : MonoBehaviour
 {
     public float onscreenDelay = 3f;
 
-    public GameObject blast;
-    public float blastSpeed = 100f;
-
     // private float _vInput; 
     // private float _hInput;
     // private Rigidbody _rb;
@@ -23,7 +20,7 @@ public class BlastBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Destroy(gameObject, onscreenDelay);
+        Destroy(this.gameObject, onscreenDelay);
     }
 
     void FixedUpdate()

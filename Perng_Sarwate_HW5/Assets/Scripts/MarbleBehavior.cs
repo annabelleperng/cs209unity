@@ -14,6 +14,9 @@ public class MarbleBehavior : MonoBehaviour
     private float fbInput;
     private float lrInput;
 
+    public GameObject blast;
+    public float blastSpeed = 100f;
+
     private Rigidbody _rb;
 
     void Start()
@@ -48,7 +51,14 @@ public class MarbleBehavior : MonoBehaviour
     void FixedUpdate()
     {
 
-        //Put code that moves the sprite using the RigidBody here
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject newBlast = Instantiate(blast, this.transform.position, this.transform.rotation) as GameObject;
+
+            Rigidbody blastRB = newBlast.GetComponent<Rigidbody>();
+            blastRB.velocity = this.transform.forward * blastSpeed;
+            //Destroy(newBlast, 3f);
+        }
     }
 
     IEnumerator OnCollisionEnter(Collision collision)
