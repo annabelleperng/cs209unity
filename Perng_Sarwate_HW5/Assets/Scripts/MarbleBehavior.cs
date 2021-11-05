@@ -33,10 +33,6 @@ public class MarbleBehavior : MonoBehaviour
     void Update()
     {
         float vert = Input.GetAxis("Vertical");
-        if (vert < 0)
-        {
-            vert = 0;
-        }
         fbInput = vert * moveSpeed;
         lrInput = Input.GetAxis("Horizontal") * rotateSpeed;
 
@@ -72,7 +68,7 @@ public class MarbleBehavior : MonoBehaviour
             yield return new WaitForSeconds(3);
             gameObject.GetComponent<ParticleSystem>().Stop();
         } else if (collision.gameObject.name.Contains("Obstacle")) {
-            gameManager.PlayerHealth -= 10;
+            gameManager.PlayerHealth -= 25;
         }
     }
 
