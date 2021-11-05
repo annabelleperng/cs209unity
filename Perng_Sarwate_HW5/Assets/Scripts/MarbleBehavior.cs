@@ -69,6 +69,8 @@ public class MarbleBehavior : MonoBehaviour
             gameObject.GetComponent<ParticleSystem>().Stop();
         } else if (collision.gameObject.name.Contains("Obstacle")) {
             gameManager.PlayerHealth -= 25;
+        }  else if (collision.gameObject.name.Contains("Power")) {
+            gameManager.PlayerHealth += 25;
         }
     }
 
